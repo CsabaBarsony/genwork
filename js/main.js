@@ -1,29 +1,7 @@
 let nodeMaxId = 1;
-let edgeMaxId = 1;
-class Node {
-    constructor(actions, generation, connections = []) {
-        this.entry = actions.entry;
-        this.exit = actions.exit;
-        this.generation = generation;
-        this.connections = connections.map((c) => {
-            if(!(c.node instanceof Node)) {
-                throw new Error('Node constructor: connection is not a Node.');
-            }
-            return c;
-        });
-        this.id = 'n' + nodeMaxId++;
-    }
-    addConnection(connection) {
-        let hasConnection = this.connections.some((c) => {
-            return(Object.is(connection, c));
-        });
-        if(!hasConnection && !Object.is(connection, this)) {
-            this.connections.push(connection);
-        }
-    }
-}
+
 let n1 = new Node({ entry: null, exit: null }, 0);
-let dna = [
+let dnaWords = [
     {
         rounds: 1,
         type: 3,
@@ -48,7 +26,7 @@ let dna = [
 ];
 let generation = 0;
 let nodes = [n1];
-dna.forEach((word) => {
+dnaWords.forEach((word) => {
     for(let i = 0; i < word.rounds; i++) {
         generation++;
         nodes.forEach((parent) => {
